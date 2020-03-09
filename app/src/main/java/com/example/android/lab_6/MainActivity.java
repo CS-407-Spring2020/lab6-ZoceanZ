@@ -46,6 +46,11 @@ public class MainActivity extends FragmentActivity {
                 Location mLastKnownLocation = task.getResult();
                 if (task.isSuccessful() && mLastKnownLocation!= null){
                     mMap.addPolyline(new PolylineOptions().add(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()), mDestinationLatLng));
+                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
+                    mapFragment.getMapAsync(googleMap -> {
+                        mMap = googleMap;
+                        googleMap.addMarker(new MarkerOptions().position(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude())).title("Current"));
+                    });
                 }
             });
         }
